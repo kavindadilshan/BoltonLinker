@@ -19,10 +19,10 @@ public class PostContent extends javax.swing.JFrame {
      */
     public PostContent() {
         initComponents();
-        Icon i = jLabel5.getIcon();
-        ImageIcon icon = (ImageIcon)i;
-        Image image = icon.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_SMOOTH);
-        jLabel5.setIcon(new ImageIcon(image));
+//        Icon i = jLabel5.getIcon();
+//        ImageIcon icon = (ImageIcon)i;
+//        Image image = icon.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_SMOOTH);
+//        jLabel5.setIcon(new ImageIcon(image));
     }
 
     /**
