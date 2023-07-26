@@ -9,5 +9,5 @@ package com.bolton.oom.notifier.constants;
  * @author Kevin Boy
  */
 public class Caonstants {
-    
+    public static final String SUCCESS_MSG = "Successfully Completed";
 }
