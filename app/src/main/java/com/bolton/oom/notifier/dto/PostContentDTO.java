@@ -8,7 +8,7 @@ package com.bolton.oom.notifier.dto;
  *
  * @author Kevin Boy
  */
-public class PostContentDTO {
+public class PostContentDTO extends SuperDTO{
     private String dateAndTime;
     private String postTitle;
     private UserDTO author;

@@ -8,7 +8,7 @@ package com.bolton.oom.notifier.dto;
  *
  * @author Kevin Boy
  */
-public class SubscriptionDetailsDTO {
+public class SubscriptionDetailsDTO extends SuperDTO{
     private long subscribeId;
     private long subscriberId;
 

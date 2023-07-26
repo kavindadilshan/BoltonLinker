@@ -8,7 +8,7 @@ package com.bolton.oom.notifier.dto;
  *
  * @author Kevin Boy
  */
-public class UserDTO {
+public class UserDTO extends SuperDTO{
     
     private long id;
     private String username;
