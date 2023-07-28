@@ -33,7 +33,7 @@ public class SignUpTest {
     }
     
     @Test
-    @DisplayName("Sign up new user using valid credentials")
+    @DisplayName("Test Sign up new user using valid credentials")
     public void testSignupNewUserUsingValidCredentials(){
         ResponseDTO response = userController.signupUserHandler(new UserDTO(TEST_ID,TEST_USERNAME,TEST_EMAIL,TEST_PASSWORD));
         Assertions.assertTrue(response.isSuccess());
