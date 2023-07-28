@@ -23,8 +23,15 @@ public class UserController implements SuperController{
         return userStore.save(userDTO);
     }
     
-//    public ResponseDTO loginUserHandler (UserDTO userDTO){
-//        return 
-//    }
+    public ResponseDTO loginUserHandler (UserDTO userDTO){
+        ResponseDTO accessible = userStore.findBy(userDTO);
+        if (accessible.isSuccess()) {
+            UserDTO objUserDTO = (UserDTO) accessible.getData();
+            if (!userDTO.getPassword().equalsIgnoreCase(objUserDTO.getPassword())) {
+                accessible.setSuccess(false);
+            }
+        }
+        return accessible;
+    }
     
 }

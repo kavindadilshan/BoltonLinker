@@ -27,7 +27,7 @@ public class UserStore implements SuperStore<UserDTO>{
     }
 
     @Override
-    public ResponseDTO remove(UserDTO t) throws Exception {
+    public ResponseDTO remove(UserDTO t){
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -37,7 +37,7 @@ public class UserStore implements SuperStore<UserDTO>{
     }
 
     @Override
-    public ResponseDTO findBy(UserDTO userDTO) throws Exception {
+    public ResponseDTO findBy(UserDTO userDTO){
         UserDTO objUserDTO = null; 
         for (UserDTO dto : signupUserList){
             if (userDTO.getEmail().equals(dto.getEmail())) {
