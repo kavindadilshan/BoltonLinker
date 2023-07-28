@@ -19,8 +19,12 @@ public class UserController implements SuperController{
         this.userStore = new UserStore();
     }
     
-    public ResponseDTO signupUserHandler(UserDTO userDTO) throws Exception{
+    public ResponseDTO signupUserHandler(UserDTO userDTO){
         return userStore.save(userDTO);
     }
+    
+//    public ResponseDTO loginUserHandler (UserDTO userDTO){
+//        return 
+//    }
     
 }
