@@ -4,7 +4,8 @@
  */
 package com.bolton.oom.notifier.store.impl;
 
-import static com.bolton.oom.notifier.constants.Caonstants.SUCCESS_MSG;
+import static com.bolton.oom.notifier.constants.Constants.SUCCESS_MSG;
+import static com.bolton.oom.notifier.constants.Constants.USER_NOT_FOUND;
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.SuperDTO;
 import com.bolton.oom.notifier.dto.UserDTO;
@@ -31,13 +32,24 @@ public class UserStore implements SuperStore<UserDTO>{
     }
 
     @Override
-    public ResponseDTO getAllData() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseDTO getAllData(){
+       return new ResponseDTO(true,signupUserList);
     }
 
     @Override
-    public ResponseDTO findBy(UserDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseDTO findBy(UserDTO userDTO) throws Exception {
+        UserDTO objUserDTO = null; 
+        for (UserDTO dto : signupUserList){
+            if (userDTO.getEmail().equals(dto.getEmail())) {
+                objUserDTO = dto;
+            }
+        }
+        if (objUserDTO != null) {
+             return new ResponseDTO(true, objUserDTO);
+        }else{
+            return new ResponseDTO(false, USER_NOT_FOUND, this);
+        }
+       
     }
     
 }

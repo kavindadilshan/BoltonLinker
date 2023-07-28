@@ -24,6 +24,11 @@ public class ResponseDTO implements Serializable{
         this.data = data;
     }
 
+    public ResponseDTO(boolean success, Object data) {
+        this.success = success;
+        this.data = data;
+    }
+
     public boolean isSuccess() {
         return success;
     }
