@@ -34,9 +34,16 @@ public class SignUpTest {
     
     @Test
     @DisplayName("Sign up new user using valid credentials")
-    public void testSignupNewUserUsingValidCredentials() throws Exception{
+    public void testSignupNewUserUsingValidCredentials(){
         ResponseDTO response = userController.signupUserHandler(new UserDTO(TEST_ID,TEST_USERNAME,TEST_EMAIL,TEST_PASSWORD));
-        Assertions.assertTrue((BooleanSupplier) response);
+        Assertions.assertTrue(response.isSuccess());
+    }
+    
+    @Test
+    @DisplayName("Test signup new user with already registered email")
+    public void testSignupNewUserWithAlreadyExistEmail(){
+        ResponseDTO response = userController.signupUserHandler(new UserDTO(TEST_ID,TEST_USERNAME,TEST_EMAIL,TEST_PASSWORD));
+        Assertions.assertEquals("email has been already exist", response.getMessage());
     }
     
 }
