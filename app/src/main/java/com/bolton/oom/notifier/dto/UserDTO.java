@@ -25,6 +25,17 @@ public class UserDTO extends SuperDTO{
         this.password = password;
     }
 
+    public UserDTO(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public UserDTO(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public long getId() {
         return id;
     }
