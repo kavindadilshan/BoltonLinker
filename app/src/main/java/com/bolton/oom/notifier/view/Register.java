@@ -4,17 +4,30 @@
  */
 package com.bolton.oom.notifier.view;
 
+import static com.bolton.oom.notifier.constants.Constants.ALL_INPUT_REQ;
+import static com.bolton.oom.notifier.constants.Constants.EMAIL_VALIDATION;
+import com.bolton.oom.notifier.controller.ControllerFactory;
+import com.bolton.oom.notifier.controller.UserController;
+import com.bolton.oom.notifier.dto.ResponseDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
+import com.bolton.oom.notifier.enums.ControllerStatus;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kevin Boy
  */
 public class Register extends javax.swing.JFrame {
+    private final UserController userController;
+    private static final Pattern REGEX_PATTERN =  Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     /**
      * Creates new form Register
      */
     public Register() {
         initComponents();
+        userController = (UserController) ControllerFactory.getInstance().getController(ControllerStatus.USER);
     }
 
     /**
@@ -261,8 +274,32 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
 
+    public static boolean emailValidator(String value){
+        return REGEX_PATTERN.matcher(value).find();
+    }
+    
     private void btnSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseClicked
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String password = txtPassword.getText();
         
+        if (!name.trim().equals("") && !email.trim().equals("") && !password.trim().equals("")) {
+            if (emailValidator(email.trim())) {
+                ResponseDTO response = userController.signupUserHandler(new UserDTO(name.trim(),email.trim(),password.trim()));
+                if (response.isSuccess()) {
+                    txtName.setText("");
+                    txtEmail.setText("");
+                    txtPassword.setText("");
+                    
+                    JOptionPane.showMessageDialog(Register.this, response.getMessage(), "Success", JOptionPane.PLAIN_MESSAGE);
+                }
+                
+            }else{
+                JOptionPane.showMessageDialog(Register.this, EMAIL_VALIDATION, "Sign Up", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(Register.this, ALL_INPUT_REQ, "Sign Up", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnSignUpMouseClicked
 
     /**

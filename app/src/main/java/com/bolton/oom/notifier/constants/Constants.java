@@ -13,5 +13,7 @@ public class Constants {
     public static final String USER_NOT_FOUND = "User Not Found";
     public static final String USER_ALREADY_EXIST = "User Already Exist";
     public static final String USER_UNSUBSCRIBED = "User Successfully Unsubscribed";
+    public static final String ALL_INPUT_REQ = "All inputs are required, Please try again!";
+    public static final String EMAIL_VALIDATION = "Please enter valid email address";
            
 }
