@@ -42,7 +42,7 @@ public class SubscribeProcessTest {
     @Test
     @DisplayName("Test user unsubscribe a user")
     public void testUserUnsubscribeUser() {
-        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(subscriberUserId,publisherUserId));
+        ResponseDTO response = subscriptionController.unsubscriptionManagement(new SubscriptionDetailsDTO(subscriberUserId,publisherUserId));
         Assertions.assertTrue(response.isSuccess());
     }
     
