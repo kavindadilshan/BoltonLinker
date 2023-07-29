@@ -15,6 +15,8 @@ import java.util.Calendar;
  * @author Kevin Boy
  */
 public class Home extends javax.swing.JFrame implements ChannelObserver{
+    
+    private UserDTO loggedUserDetails;
 
     /**
      * Creates new form Home
@@ -27,6 +29,9 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     public Home(UserDTO userDTO, ChannelObserverImpl channelObserverImpl) {
         initComponents();
         showGreetingText();
+        
+        this.loggedUserDetails = userDTO;
+        lblUserName.setText("Hi"+" "+loggedUserDetails.getUsername());
     }
     
     public final void showGreetingText(){
@@ -65,7 +70,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
         lblGreeting = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -197,9 +202,9 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Hi Kavinda,");
+        lblUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(0, 0, 0));
+        lblUserName.setText("Hi Kavinda,");
 
         lblGreeting.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         lblGreeting.setText("Good Morning!");
@@ -211,15 +216,17 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblGreeting)
-                    .addComponent(jLabel3))
-                .addContainerGap(68, Short.MAX_VALUE))
+                    .addComponent(lblUserName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(lblGreeting)
+                        .addGap(0, 438, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(lblUserName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblGreeting)
                 .addContainerGap())
@@ -230,15 +237,17 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(192, 192, 192)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(31, 31, 31)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -316,7 +325,6 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
@@ -328,6 +336,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel lblGreeting;
+    private javax.swing.JLabel lblUserName;
     // End of variables declaration//GEN-END:variables
 
     @Override
