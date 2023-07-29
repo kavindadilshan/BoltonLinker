@@ -6,17 +6,17 @@ package com.bolton.oom.notifier.controller;
 
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.UserDTO;
-import com.bolton.oom.notifier.store.impl.UserStore;
+import com.bolton.oom.notifier.store.impl.UserStoreImpl;
 
 /**
  *
  * @author Kevin Boy
  */
 public class UserController implements SuperController{
-    private final UserStore userStore;
+    private final UserStoreImpl userStore;
 
     public UserController() {
-        this.userStore = new UserStore();
+        this.userStore = new UserStoreImpl();
     }
     
     public ResponseDTO signupUserHandler(UserDTO userDTO){
