@@ -36,4 +36,11 @@ public class SubscribeProcessTest {
         Assertions.assertTrue(response.isSuccess());
     }
     
+    @Test
+    @DisplayName("Test user unsubscribe a user")
+    public void testUserUnsubscribeUser() {
+        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(subscribedUserId,subscriberUserId));
+        Assertions.assertTrue(response.isSuccess());
+    }
+    
 }
