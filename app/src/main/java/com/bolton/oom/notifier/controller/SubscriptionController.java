@@ -28,5 +28,9 @@ public class SubscriptionController implements SuperController{
         return subscriptionStoreImpl.findBy(new SubscriptionDetailsDTO(0,userDTO.getId()));
     }
     
+    public ResponseDTO getSubscribersIdManager(long userId){
+        return subscriptionStoreImpl.getSubscribersIds(userId);
+    }
+    
     
 }

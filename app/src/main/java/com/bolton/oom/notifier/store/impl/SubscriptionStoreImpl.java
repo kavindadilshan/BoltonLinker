@@ -62,4 +62,14 @@ public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>
         return new ResponseDTO(true,arrayList);
     }
     
+    public ResponseDTO getSubscribersIds (long userId){
+        ArrayList<Long> subscribersIdList = new ArrayList<>();
+        for (SubscriptionDetailsDTO obj : subscribedList){
+            if (userId == obj.getSubscribeId()) {
+                subscribersIdList.add(obj.getPublisherId());
+            }
+        }
+        return new ResponseDTO(!subscribersIdList.isEmpty(),subscribersIdList);
+    }
+    
 }
