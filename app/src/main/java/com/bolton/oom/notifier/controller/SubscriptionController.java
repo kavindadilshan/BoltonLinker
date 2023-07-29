@@ -32,5 +32,7 @@ public class SubscriptionController implements SuperController{
         return subscriptionStoreImpl.getSubscribersIds(userId);
     }
     
-    
+    public ResponseDTO unsubscriptionManagement (SubscriptionDetailsDTO subscriptionDetailsDTO){
+        return subscriptionStoreImpl.remove(subscriptionDetailsDTO);
+    }
 }

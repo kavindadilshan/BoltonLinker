@@ -4,6 +4,7 @@
  */
 package com.bolton.oom.notifier.store.impl;
 
+import static com.bolton.oom.notifier.constants.Constants.USER_UNSUBSCRIBED;
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.SubscribedUsersDTO;
 import com.bolton.oom.notifier.dto.SubscriptionDetailsDTO;
@@ -26,8 +27,14 @@ public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>
     }
 
     @Override
-    public ResponseDTO remove(SubscriptionDetailsDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseDTO remove(SubscriptionDetailsDTO subscriptionDetailsDTO){
+        for (int i=0;i<subscribedList.size();i++){
+            SubscriptionDetailsDTO obj = subscribedList.get(i);
+            if ((subscriptionDetailsDTO.getPublisherId()==obj.getPublisherId())) {
+                subscribedList.remove(obj);
+            }
+        }
+        return new ResponseDTO(true,USER_UNSUBSCRIBED,subscriptionDetailsDTO);
     }
 
     @Override
