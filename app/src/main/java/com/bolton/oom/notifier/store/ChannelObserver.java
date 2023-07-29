@@ -4,10 +4,12 @@
  */
 package com.bolton.oom.notifier.store;
 
+import com.bolton.oom.notifier.dto.PostContentDTO;
+
 /**
  *
  * @author Kevin Boy
  */
-public interface ChannelObserverble {
-    
+public interface ChannelObserver {
+    public void notifyPostCreation(PostContentDTO postContentDTO);
 }
