@@ -10,4 +10,5 @@ package com.bolton.oom.notifier.store;
  */
 public interface ChannelSubject {
      public void addObserver(ChannelObserver channelObserver);
+     public void removeObserver(ChannelObserver channelObserver);
 }

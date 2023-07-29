@@ -24,5 +24,10 @@ public class ChannelObserverImpl implements ChannelSubject{
     public void addObserver(ChannelObserver channelObserver) {
         listChannelObservers.add(channelObserver);
     }
+
+    @Override
+    public void removeObserver(ChannelObserver channelObserver) {
+        listChannelObservers.remove(channelObserver);
+    }
     
 }
