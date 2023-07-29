@@ -15,5 +15,6 @@ public class Constants {
     public static final String USER_UNSUBSCRIBED = "User Successfully Unsubscribed";
     public static final String ALL_INPUT_REQ = "All inputs are required, Please try again!";
     public static final String EMAIL_VALIDATION = "Please enter valid email address";
+    public static final String AUTHENTICATE_DATA_INVALID = "You've entered an incorrect email or password";
            
 }

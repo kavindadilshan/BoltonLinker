@@ -4,17 +4,30 @@
  */
 package com.bolton.oom.notifier.view;
 
+import static com.bolton.oom.notifier.constants.Constants.ALL_INPUT_REQ;
+import static com.bolton.oom.notifier.constants.Constants.AUTHENTICATE_DATA_INVALID;
+import static com.bolton.oom.notifier.constants.Constants.EMAIL_VALIDATION;
+import com.bolton.oom.notifier.controller.ControllerFactory;
+import com.bolton.oom.notifier.controller.UserController;
+import com.bolton.oom.notifier.dto.ResponseDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
+import com.bolton.oom.notifier.enums.ControllerStatus;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Kevin Boy
  */
 public class Login extends javax.swing.JFrame {
-
+    private UserController userController;
+    private static final Pattern REGEX_PATTERN =  Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        userController = (UserController) ControllerFactory.getInstance().getController(ControllerStatus.USER);
     }
 
     /**
@@ -230,7 +243,7 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-       
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
@@ -240,9 +253,29 @@ public class Login extends javax.swing.JFrame {
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordActionPerformed
-
+    
+    public static boolean emailValidator(String value){
+        return REGEX_PATTERN.matcher(value).find();
+    }
+    
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
-        // TODO add your handling code here:
+        String email = txtEmail.getText();
+        String password = txtPassword.getText();
+        
+        if (!email.trim().equals("") && !password.trim().equals("")) {
+            if (emailValidator(email.trim())) {
+                ResponseDTO response = userController.loginUserHandler(new UserDTO(email.trim(),password.trim()));
+                if (response.isSuccess()) {
+                    // do something
+                }else{
+                    JOptionPane.showMessageDialog(Login.this, AUTHENTICATE_DATA_INVALID, "Login", JOptionPane.WARNING_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(Login.this, EMAIL_VALIDATION, "Login", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(Login.this, ALL_INPUT_REQ, "Login", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnLoginMouseClicked
 
     /**
