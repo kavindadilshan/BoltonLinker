@@ -4,44 +4,40 @@
  */
 package com.bolton.oom.notifier.dto;
 
-import com.bolton.oom.notifier.enums.SubscriptionStatus;
-
 /**
  *
  * @author Kevin Boy
  */
 public class SubscribedUsersDTO extends UserDTO{
     private UserDTO userDTO;
-    private SubscriptionStatus subscriptionStatus;
+    private boolean isSubscribed;
 
     public SubscribedUsersDTO() {
     }
 
-    public SubscribedUsersDTO(UserDTO userDTO, SubscriptionStatus subscriptionStatus) {
+    public SubscribedUsersDTO(UserDTO userDTO, boolean isSubscribed) {
         this.userDTO = userDTO;
-        this.subscriptionStatus = subscriptionStatus;
+        this.isSubscribed = isSubscribed;
     }
 
     public UserDTO getUserDTO() {
         return userDTO;
     }
 
-    public SubscriptionStatus getSubscriptionStatus() {
-        return subscriptionStatus;
+    public boolean isIsSubscribed() {
+        return isSubscribed;
     }
 
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
     }
 
-    public void setSubscriptionStatus(SubscriptionStatus subscriptionStatus) {
-        this.subscriptionStatus = subscriptionStatus;
+    public void setIsSubscribed(boolean isSubscribed) {
+        this.isSubscribed = isSubscribed;
     }
 
     @Override
     public String toString() {
-        return "SubscribedUsersDTO{" + "userDTO=" + userDTO + ", subscriptionStatus=" + subscriptionStatus + '}';
-    }
-    
-    
+        return "SubscribedUsersDTO{" + "userDTO=" + userDTO + ", isSubscribed=" + isSubscribed + '}';
+    }    
 }

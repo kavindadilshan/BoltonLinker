@@ -11,13 +11,20 @@ package com.bolton.oom.notifier.dto;
 public class SubscriptionDetailsDTO extends SuperDTO{
     private long subscribeId;
     private long subscriberId;
+    private long publisherId;
 
     public SubscriptionDetailsDTO() {
     }
 
-    public SubscriptionDetailsDTO(long subscribeId, long subscriberId) {
+    public SubscriptionDetailsDTO(long subscribeId, long subscriberId, long publisherId) {
         this.subscribeId = subscribeId;
         this.subscriberId = subscriberId;
+        this.publisherId = publisherId;
+    }
+
+    public SubscriptionDetailsDTO(long subscriberId, long publisherId) {
+        this.subscriberId = subscriberId;
+        this.publisherId = publisherId;
     }
 
     public long getSubscribeId() {
@@ -28,6 +35,10 @@ public class SubscriptionDetailsDTO extends SuperDTO{
         return subscriberId;
     }
 
+    public long getPublisherId() {
+        return publisherId;
+    }
+
     public void setSubscribeId(long subscribeId) {
         this.subscribeId = subscribeId;
     }
@@ -36,10 +47,12 @@ public class SubscriptionDetailsDTO extends SuperDTO{
         this.subscriberId = subscriberId;
     }
 
+    public void setPublisherId(long publisherId) {
+        this.publisherId = publisherId;
+    }
+
     @Override
     public String toString() {
-        return "SubscriptionDetailsDTO{" + "subscribeId=" + subscribeId + ", subscriberId=" + subscriberId + '}';
+        return "SubscriptionDetailsDTO{" + "subscribeId=" + subscribeId + ", subscriberId=" + subscriberId + ", publisherId=" + publisherId + '}';
     }
-    
-    
 }
