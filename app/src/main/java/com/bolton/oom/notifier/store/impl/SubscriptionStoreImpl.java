@@ -7,16 +7,20 @@ package com.bolton.oom.notifier.store.impl;
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.SubscriptionDetailsDTO;
 import com.bolton.oom.notifier.store.SuperStore;
+import java.util.ArrayList;
 
 /**
  *
  * @author Kevin Boy
  */
-public class SubscrioptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>{
+public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>{
+    
+    private static final ArrayList<SubscriptionDetailsDTO> subscribedList = new ArrayList<>();
 
     @Override
-    public ResponseDTO save(SubscriptionDetailsDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ResponseDTO save(SubscriptionDetailsDTO subscriptionDetailsDTO){
+       subscribedList.add(subscriptionDetailsDTO);
+       return new ResponseDTO(true,subscriptionDetailsDTO);
     }
 
     @Override

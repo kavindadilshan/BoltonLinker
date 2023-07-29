@@ -31,6 +31,8 @@ public class ControllerFactory {
         switch (controllerStatus) {
             case USER:
                 return new UserController();
+            case SUBSCRIBE:
+                return new SubscriptionController();
             default:
                 throw new AssertionError();
         }
