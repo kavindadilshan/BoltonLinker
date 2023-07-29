@@ -8,6 +8,7 @@ import com.bolton.oom.notifier.dto.PostContentDTO;
 import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
+import java.util.Calendar;
 
 /**
  *
@@ -20,10 +21,27 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
      */
     public Home() {
         initComponents();
+        showGreetingText();
     }
 
     public Home(UserDTO userDTO, ChannelObserverImpl channelObserverImpl) {
         initComponents();
+        showGreetingText();
+    }
+    
+    public final void showGreetingText(){
+        Calendar calendar = Calendar.getInstance();
+        int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            lblGreeting.setText("Good Morning!");
+        }else if (timeOfDay >= 12 && timeOfDay < 16) {
+            lblGreeting.setText("Good Afternoon!");
+        }else if (timeOfDay >= 16 && timeOfDay < 21) {
+            lblGreeting.setText("Good Evening!");
+        }else {
+             lblGreeting.setText("Good Night!");
+        }
     }
 
     /**
@@ -48,7 +66,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblGreeting = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -183,8 +201,8 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Hi Kavinda,");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel2.setText("Good Morning!");
+        lblGreeting.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        lblGreeting.setText("Good Morning!");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -193,7 +211,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
+                    .addComponent(lblGreeting)
                     .addComponent(jLabel3))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
@@ -203,7 +221,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(lblGreeting)
                 .addContainerGap())
         );
 
@@ -298,7 +316,6 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -310,6 +327,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel lblGreeting;
     // End of variables declaration//GEN-END:variables
 
     @Override
