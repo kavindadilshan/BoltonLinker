@@ -6,6 +6,7 @@ package com.bolton.oom.notifier.store.impl;
 
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.ChannelSubject;
+import java.util.Set;
 
 /**
  *
@@ -13,9 +14,15 @@ import com.bolton.oom.notifier.store.ChannelSubject;
  */
 public class ChannelObserverImpl implements ChannelSubject{    
 
+    private final Set<ChannelObserver> listChannelObservers;
+
+    public ChannelObserverImpl(Set<ChannelObserver> listChannelObservers) {
+        this.listChannelObservers = listChannelObservers;
+    }
+    
     @Override
     public void addObserver(ChannelObserver channelObserver) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        listChannelObservers.add(channelObserver);
     }
     
 }
