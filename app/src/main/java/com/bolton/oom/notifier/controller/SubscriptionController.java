@@ -6,6 +6,7 @@ package com.bolton.oom.notifier.controller;
 
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.SubscriptionDetailsDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.store.impl.SubscriptionStoreImpl;
 
 /**
@@ -21,6 +22,10 @@ public class SubscriptionController implements SuperController{
     
     public ResponseDTO subscriptionProcessManagement (SubscriptionDetailsDTO subscriptionDetailsDTO){
         return subscriptionStoreImpl.save(subscriptionDetailsDTO);
+    }
+    
+    public ResponseDTO getAllSubscriptionsForUser (UserDTO userDTO){
+        return subscriptionStoreImpl.findBy(new SubscriptionDetailsDTO(0,userDTO.getId()));
     }
     
     
