@@ -8,6 +8,7 @@ import com.bolton.oom.notifier.controller.ControllerFactory;
 import com.bolton.oom.notifier.controller.SubscriptionController;
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.SubscriptionDetailsDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.enums.ControllerStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,27 +21,36 @@ import org.junit.jupiter.api.Test;
  */
 public class SubscribeProcessTest {
     private SubscriptionController subscriptionController;
+    private LoginTest loginTest;
     
     public final long subscriberUserId = 1;
-    public final long subscribedUserId = 4;
+    public final long publisherUserId = 4;
     
     @BeforeEach
     public void init(){
         subscriptionController = (SubscriptionController) ControllerFactory.getInstance().getController(ControllerStatus.SUBSCRIBE);
+        loginTest = new LoginTest();
     }
     
     @Test
     @DisplayName("Test user subscribe a user")
     public void testUserSubscribeUser() {
-        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(subscribedUserId,subscriberUserId));
+        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(subscriberUserId,publisherUserId));
         Assertions.assertTrue(response.isSuccess());
     }
     
     @Test
     @DisplayName("Test user unsubscribe a user")
     public void testUserUnsubscribeUser() {
-        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(subscribedUserId,subscriberUserId));
+        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(subscriberUserId,publisherUserId));
         Assertions.assertTrue(response.isSuccess());
+    }
+    
+    @Test
+    @DisplayName("Subscription details for login user")
+    public void getSubscriptionDetailsByTestUserId(){
+        ResponseDTO response = subscriptionController.getAllSubscriptionsForUser(new UserDTO(loginTest.TEST_EMAIL,loginTest.TEST_VALID_PASSWORD));
+        Assertions.assertEquals("all subscription details for login user" ,response.getData());
     }
     
 }
