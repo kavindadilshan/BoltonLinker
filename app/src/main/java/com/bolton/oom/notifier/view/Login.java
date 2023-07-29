@@ -12,6 +12,8 @@ import com.bolton.oom.notifier.controller.UserController;
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.enums.ControllerStatus;
+import com.bolton.oom.notifier.store.ChannelObserver;
+import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
@@ -20,7 +22,8 @@ import javax.swing.JOptionPane;
  * @author Kevin Boy
  */
 public class Login extends javax.swing.JFrame {
-    private UserController userController;
+    private final UserController userController;
+    private final ChannelObserverImpl channelObserverImpl;
     private static final Pattern REGEX_PATTERN =  Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     /**
      * Creates new form Login
@@ -28,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         userController = (UserController) ControllerFactory.getInstance().getController(ControllerStatus.USER);
+        channelObserverImpl = new ChannelObserverImpl();
     }
 
     /**
@@ -271,7 +275,10 @@ public class Login extends javax.swing.JFrame {
             if (emailValidator(email.trim())) {
                 ResponseDTO response = userController.loginUserHandler(new UserDTO(email.trim(),password.trim()));
                 if (response.isSuccess()) {
-                    // do something
+                    UserDTO userDTO = (UserDTO) response.getData();
+                    Home home = new Home(userDTO,channelObserverImpl);
+                    channelObserverImpl.addObserver(home);
+                    home.setVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(Login.this, AUTHENTICATE_DATA_INVALID, "Login", JOptionPane.WARNING_MESSAGE);
                 }

@@ -4,16 +4,25 @@
  */
 package com.bolton.oom.notifier.view;
 
+import com.bolton.oom.notifier.dto.PostContentDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
+import com.bolton.oom.notifier.store.ChannelObserver;
+import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
+
 /**
  *
  * @author Kevin Boy
  */
-public class Home extends javax.swing.JFrame {
+public class Home extends javax.swing.JFrame implements ChannelObserver{
 
     /**
      * Creates new form Home
      */
     public Home() {
+        initComponents();
+    }
+
+    public Home(UserDTO userDTO, ChannelObserverImpl channelObserverImpl) {
         initComponents();
     }
 
@@ -302,4 +311,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void notifyPostCreation(PostContentDTO postContentDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

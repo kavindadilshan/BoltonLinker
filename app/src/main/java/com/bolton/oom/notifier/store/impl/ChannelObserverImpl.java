@@ -6,6 +6,7 @@ package com.bolton.oom.notifier.store.impl;
 
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.ChannelSubject;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,8 +17,8 @@ public class ChannelObserverImpl implements ChannelSubject{
 
     private final Set<ChannelObserver> listChannelObservers;
 
-    public ChannelObserverImpl(Set<ChannelObserver> listChannelObservers) {
-        this.listChannelObservers = listChannelObservers;
+    public ChannelObserverImpl(){
+        listChannelObservers = new HashSet<>();
     }
     
     @Override

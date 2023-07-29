@@ -295,7 +295,7 @@ public class Register extends javax.swing.JFrame {
                     txtEmail.setText("");
                     txtPassword.setText("");
                     
-                    JOptionPane.showMessageDialog(Register.this, response.getMessage(), password.trim(), JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(Register.this, response.getMessage(), "Success", JOptionPane.PLAIN_MESSAGE);
                 }
                 
             }else{
