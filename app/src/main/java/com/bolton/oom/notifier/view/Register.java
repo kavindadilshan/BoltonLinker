@@ -47,13 +47,13 @@ public class Register extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         txtName = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btnSignUp = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        btnLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,10 +126,11 @@ public class Register extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                    .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -154,6 +155,7 @@ public class Register extends javax.swing.JFrame {
         btnSignUp.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         btnSignUp.setForeground(new java.awt.Color(255, 255, 255));
         btnSignUp.setText("Sign Up");
+        btnSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnSignUpMouseClicked(evt);
@@ -171,9 +173,15 @@ public class Register extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Do you have an account?");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Symbol", 1, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 102, 153));
-        jLabel6.setText("Login");
+        btnLogin.setFont(new java.awt.Font("Segoe UI Symbol", 1, 16)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(0, 102, 153));
+        btnLogin.setText("Login");
+        btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLoginMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -183,7 +191,7 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(btnLogin)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -192,7 +200,7 @@ public class Register extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(btnLogin))
                 .addGap(19, 19, 19))
         );
 
@@ -270,10 +278,6 @@ public class Register extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSignUpActionPerformed
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     public static boolean emailValidator(String value){
         return REGEX_PATTERN.matcher(value).find();
     }
@@ -291,7 +295,7 @@ public class Register extends javax.swing.JFrame {
                     txtEmail.setText("");
                     txtPassword.setText("");
                     
-                    JOptionPane.showMessageDialog(Register.this, response.getMessage(), "Success", JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.showMessageDialog(Register.this, response.getMessage(), password.trim(), JOptionPane.PLAIN_MESSAGE);
                 }
                 
             }else{
@@ -301,6 +305,15 @@ public class Register extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(Register.this, ALL_INPUT_REQ, "Sign Up", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btnSignUpMouseClicked
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+        Login login = new Login();
+        login.setVisible(true);
+    }//GEN-LAST:event_btnLoginMouseClicked
 
     /**
      * @param args the command line arguments
@@ -338,13 +351,13 @@ public class Register extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnLogin;
     private javax.swing.JButton btnSignUp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -352,6 +365,6 @@ public class Register extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
