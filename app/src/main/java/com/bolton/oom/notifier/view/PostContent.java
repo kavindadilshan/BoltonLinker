@@ -4,25 +4,60 @@
  */
 package com.bolton.oom.notifier.view;
 
+import static com.bolton.oom.notifier.constants.Constants.POST_CONTENT_REQ;
+import com.bolton.oom.notifier.dto.PostContentDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
+import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Kevin Boy
  */
 public class PostContent extends javax.swing.JFrame {
+    
+    private ChannelObserverImpl channelObserverImpl;
+    private UserDTO loggedUserDetails;
 
     /**
      * Creates new form PostContent
      */
     public PostContent() {
         initComponents();
+        showGreetingText();
 //        Icon i = jLabel5.getIcon();
 //        ImageIcon icon = (ImageIcon)i;
 //        Image image = icon.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_SMOOTH);
 //        jLabel5.setIcon(new ImageIcon(image));
+    }
+
+    public PostContent(ChannelObserverImpl channelObserverImpl, UserDTO userDTO) {
+        this.channelObserverImpl = channelObserverImpl;
+        this.loggedUserDetails = userDTO;
+        
+        lblUserName.setText("Hi"+" "+loggedUserDetails.getUsername());
+        showGreetingText();
+    }
+    
+    public final void showGreetingText(){
+        Calendar calendar = Calendar.getInstance();
+        int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        
+        if(timeOfDay >= 0 && timeOfDay < 12){
+            lblGreeting.setText("Good Morning!");
+        }else if (timeOfDay >= 12 && timeOfDay < 16) {
+            lblGreeting.setText("Good Afternoon!");
+        }else if (timeOfDay >= 16 && timeOfDay < 21) {
+            lblGreeting.setText("Good Evening!");
+        }else {
+             lblGreeting.setText("Good Night!");
+        }
     }
 
     /**
@@ -39,12 +74,14 @@ public class PostContent extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jPanelArea = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtPost = new javax.swing.JTextArea();
+        btnPost = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblUserName = new javax.swing.JLabel();
+        lblGreeting = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,24 +119,42 @@ public class PostContent extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 153));
         jLabel4.setText("What's on your mind ?");
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 642, Short.MAX_VALUE)
+        jPanelArea.setBackground(new java.awt.Color(255, 255, 255));
+
+        txtPost.setColumns(20);
+        txtPost.setRows(5);
+        jScrollPane1.setViewportView(txtPost);
+
+        javax.swing.GroupLayout jPanelAreaLayout = new javax.swing.GroupLayout(jPanelArea);
+        jPanelArea.setLayout(jPanelAreaLayout);
+        jPanelAreaLayout.setHorizontalGroup(
+            jPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelAreaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 225, Short.MAX_VALUE)
+        jPanelAreaLayout.setVerticalGroup(
+            jPanelAreaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelAreaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Post");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPost.setBackground(new java.awt.Color(0, 153, 153));
+        btnPost.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnPost.setForeground(new java.awt.Color(255, 255, 255));
+        btnPost.setText("Post");
+        btnPost.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnPost.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPostMouseClicked(evt);
+            }
+        });
+        btnPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnPostActionPerformed(evt);
             }
         });
 
@@ -114,8 +169,8 @@ public class PostContent extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(61, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPost, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68))
         );
         jPanel4Layout.setVerticalGroup(
@@ -124,9 +179,9 @@ public class PostContent extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                .addComponent(btnPost, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
 
@@ -134,12 +189,12 @@ public class PostContent extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Hi Kavinda,");
+        lblUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(0, 0, 0));
+        lblUserName.setText("Hi Kavinda,");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel2.setText("Good Morning!");
+        lblGreeting.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        lblGreeting.setText("Good Morning!");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -148,17 +203,17 @@ public class PostContent extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(lblGreeting)
+                    .addComponent(lblUserName))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(lblUserName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addComponent(lblGreeting)
                 .addContainerGap())
         );
 
@@ -213,9 +268,22 @@ public class PostContent extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnPostActionPerformed
+
+    private void btnPostMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPostMouseClicked
+       String post = txtPost.getText();
+        if (post.trim().equals("")) {
+            JOptionPane.showMessageDialog(this, POST_CONTENT_REQ, "Post", JOptionPane.WARNING_MESSAGE);
+        }else{
+            txtPost.setText("");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+            String formatDate = dateFormat.format(new Date());
+            channelObserverImpl.informingPostPublishment(new PostContentDTO(formatDate,post.trim(),loggedUserDetails));
+            
+        }
+    }//GEN-LAST:event_btnPostMouseClicked
 
     /**
      * @param args the command line arguments
@@ -253,16 +321,18 @@ public class PostContent extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPost;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelArea;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblGreeting;
+    private javax.swing.JLabel lblUserName;
+    private javax.swing.JTextArea txtPost;
     // End of variables declaration//GEN-END:variables
 }
