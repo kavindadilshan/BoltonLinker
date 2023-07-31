@@ -26,6 +26,7 @@ public class ChannelObserverImpl implements ChannelSubject{
 
     public ChannelObserverImpl(){
         listChannelObservers = new HashSet<>();
+        subscriptionController = new SubscriptionController();
     }
     
     @Override
