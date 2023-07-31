@@ -5,6 +5,7 @@
 package com.bolton.oom.notifier.store;
 
 import com.bolton.oom.notifier.dto.PostContentDTO;
+import com.bolton.oom.notifier.dto.UserDTO;
 
 /**
  *
@@ -12,4 +13,5 @@ import com.bolton.oom.notifier.dto.PostContentDTO;
  */
 public interface ChannelObserver {
     public void notifyPostCreation(PostContentDTO postContentDTO);
+    public void notifyAccountCreation(UserDTO userDTO);
 }

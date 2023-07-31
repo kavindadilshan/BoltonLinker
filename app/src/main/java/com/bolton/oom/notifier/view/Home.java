@@ -343,4 +343,9 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     public void notifyPostCreation(PostContentDTO postContentDTO) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    @Override
+    public void notifyAccountCreation(UserDTO userDTO) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

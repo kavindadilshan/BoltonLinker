@@ -8,7 +8,8 @@ package com.bolton.oom.notifier.store;
  *
  * @author Kevin Boy
  */
-public interface ChannelSubject {
+public interface ChannelSubject<T> {
      public void addObserver(ChannelObserver channelObserver);
      public void removeObserver(ChannelObserver channelObserver);
+     public void informingAccCreation(T t);
 }

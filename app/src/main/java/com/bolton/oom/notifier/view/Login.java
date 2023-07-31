@@ -278,6 +278,7 @@ public class Login extends javax.swing.JFrame {
                     UserDTO userDTO = (UserDTO) response.getData();
                     Home home = new Home(userDTO,channelObserverImpl);
                     channelObserverImpl.addObserver(home);
+                    channelObserverImpl.informingAccCreation(userDTO);
                     home.setVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(Login.this, AUTHENTICATE_DATA_INVALID, "Login", JOptionPane.WARNING_MESSAGE);

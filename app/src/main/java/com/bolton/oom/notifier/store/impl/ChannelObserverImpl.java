@@ -4,6 +4,7 @@
  */
 package com.bolton.oom.notifier.store.impl;
 
+import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.ChannelSubject;
 import java.util.HashSet;
@@ -30,5 +31,13 @@ public class ChannelObserverImpl implements ChannelSubject{
     public void removeObserver(ChannelObserver channelObserver) {
         listChannelObservers.remove(channelObserver);
     }
+
+    @Override
+    public void informingAccCreation(Object object) {
+        for(ChannelObserver channelObserver : listChannelObservers){
+            channelObserver.notifyAccountCreation((UserDTO) object);
+        }
+    }
+    
     
 }
