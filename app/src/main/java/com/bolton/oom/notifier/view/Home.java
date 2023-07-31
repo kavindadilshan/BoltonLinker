@@ -348,4 +348,8 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     public void notifyAccountCreation(UserDTO userDTO) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public UserDTO getLoggedUserDetails(){
+        return loggedUserDetails;
+    }
 }
