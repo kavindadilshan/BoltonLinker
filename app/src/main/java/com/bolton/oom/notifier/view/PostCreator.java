@@ -20,29 +20,31 @@ import javax.swing.JOptionPane;
  *
  * @author Kevin Boy
  */
-public class PostContent extends javax.swing.JFrame {
-    
-    private ChannelObserverImpl channelObserverImpl;
+public class PostCreator extends javax.swing.JFrame {
+   
     private UserDTO loggedUserDetails;
+    private ChannelObserverImpl channelObserverImpl;
 
     /**
      * Creates new form PostContent
      */
-    public PostContent() {
+    public PostCreator() {
         initComponents();
         showGreetingText();
+        lblusrname.setText("Hi"+" "+loggedUserDetails.getUsername());
 //        Icon i = jLabel5.getIcon();
 //        ImageIcon icon = (ImageIcon)i;
 //        Image image = icon.getImage().getScaledInstance(jLabel5.getWidth(), jLabel5.getHeight(), Image.SCALE_SMOOTH);
 //        jLabel5.setIcon(new ImageIcon(image));
     }
 
-    public PostContent(ChannelObserverImpl channelObserverImpl, UserDTO userDTO) {
-        this.channelObserverImpl = channelObserverImpl;
+    public PostCreator(UserDTO userDTO,ChannelObserverImpl channelObserverImpl) {
         this.loggedUserDetails = userDTO;
-        
-        lblUserName.setText("Hi"+" "+loggedUserDetails.getUsername());
+        this.channelObserverImpl = channelObserverImpl;
+        initComponents();
         showGreetingText();
+        lblusrname.setText("Hi"+" "+loggedUserDetails.getUsername());
+        
     }
     
     public final void showGreetingText(){
@@ -50,13 +52,13 @@ public class PostContent extends javax.swing.JFrame {
         int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         
         if(timeOfDay >= 0 && timeOfDay < 12){
-            lblGreeting.setText("Good Morning!");
+            lblGreeting1.setText("Good Morning!");
         }else if (timeOfDay >= 12 && timeOfDay < 16) {
-            lblGreeting.setText("Good Afternoon!");
+            lblGreeting1.setText("Good Afternoon!");
         }else if (timeOfDay >= 16 && timeOfDay < 21) {
-            lblGreeting.setText("Good Evening!");
+            lblGreeting1.setText("Good Evening!");
         }else {
-             lblGreeting.setText("Good Night!");
+             lblGreeting1.setText("Good Night!");
         }
     }
 
@@ -80,8 +82,8 @@ public class PostContent extends javax.swing.JFrame {
         btnPost = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
-        lblUserName = new javax.swing.JLabel();
-        lblGreeting = new javax.swing.JLabel();
+        lblusrname = new javax.swing.JLabel();
+        lblGreeting1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -189,12 +191,12 @@ public class PostContent extends javax.swing.JFrame {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblUserName.setForeground(new java.awt.Color(0, 0, 0));
-        lblUserName.setText("Hi Kavinda,");
+        lblusrname.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblusrname.setForeground(new java.awt.Color(0, 0, 0));
+        lblusrname.setText("Hi Kavinda,");
 
-        lblGreeting.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        lblGreeting.setText("Good Morning!");
+        lblGreeting1.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        lblGreeting1.setText("Good Morning!");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -203,17 +205,17 @@ public class PostContent extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblGreeting)
-                    .addComponent(lblUserName))
+                    .addComponent(lblGreeting1)
+                    .addComponent(lblusrname))
                 .addContainerGap(68, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblUserName)
+                .addComponent(lblusrname)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblGreeting)
+                .addComponent(lblGreeting1)
                 .addContainerGap())
         );
 
@@ -302,20 +304,21 @@ public class PostContent extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PostContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PostContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PostContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PostContent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostCreator.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PostContent().setVisible(true);
+                new PostCreator().setVisible(true);
             }
         });
     }
@@ -331,8 +334,8 @@ public class PostContent extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelArea;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblGreeting;
-    private javax.swing.JLabel lblUserName;
+    private javax.swing.JLabel lblGreeting1;
+    private javax.swing.JLabel lblusrname;
     private javax.swing.JTextArea txtPost;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,12 +4,14 @@
  */
 package com.bolton.oom.notifier.view;
 
+import com.bolton.oom.notifier.controller.ControllerFactory;
 import com.bolton.oom.notifier.controller.SubscriptionController;
 import com.bolton.oom.notifier.dto.PostContentDTO;
 import com.bolton.oom.notifier.dto.ResponseDTO;
 import com.bolton.oom.notifier.dto.SubscribedUsersDTO;
 import com.bolton.oom.notifier.dto.SubscriptionDetailsDTO;
 import com.bolton.oom.notifier.dto.UserDTO;
+import com.bolton.oom.notifier.enums.ControllerStatus;
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
 import java.awt.GridLayout;
@@ -30,6 +32,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
 
     private UserDTO loggedUserDetails;
     private SubscriptionController subscriptionController;
+    private ChannelObserverImpl channelObserverImpl;
     
     JPanel containerPosts = new JPanel(new GridLayout(0, 1));
 
@@ -41,11 +44,13 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
         showGreetingText();
     }
 
-    public Home(UserDTO userDTO, ChannelObserverImpl channelObserverImpl) {
+    public Home(UserDTO userDTO, ChannelObserverImpl observerImpl) {
         initComponents();
         showGreetingText();
+         subscriptionController = (SubscriptionController) ControllerFactory.getInstance().getController(ControllerStatus.SUBSCRIBE);
 
         this.loggedUserDetails = userDTO;
+        this.channelObserverImpl = observerImpl;
         lblUserName.setText("Hi" + " " + loggedUserDetails.getUsername());
     }
 
@@ -77,7 +82,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnPost = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jspNewsFeed = new javax.swing.JScrollPane();
@@ -121,13 +126,18 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Post");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnPost.setBackground(new java.awt.Color(0, 153, 153));
+        btnPost.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
+        btnPost.setForeground(new java.awt.Color(255, 255, 255));
+        btnPost.setText("Post");
+        btnPost.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnPostMouseClicked(evt);
+            }
+        });
+        btnPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnPostActionPerformed(evt);
             }
         });
 
@@ -191,7 +201,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(290, 290, 290)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnPost, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +216,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -300,9 +310,13 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPostActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnPostActionPerformed
+
+    private void btnPostMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPostMouseClicked
+        new PostCreator(loggedUserDetails,channelObserverImpl).setVisible(true);
+    }//GEN-LAST:event_btnPostMouseClicked
 
     /**
      * @param args the command line arguments
@@ -340,7 +354,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPost;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

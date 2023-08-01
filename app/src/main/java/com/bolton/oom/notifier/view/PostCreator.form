@@ -270,8 +270,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblGreeting" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblUserName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblGreeting1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblusrname" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="68" max="32767" attributes="0"/>
                   </Group>
@@ -281,16 +281,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lblUserName" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblusrname" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="lblGreeting" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblGreeting1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblUserName">
+            <Component class="javax.swing.JLabel" name="lblusrname">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -301,7 +301,7 @@
                 <Property name="text" type="java.lang.String" value="Hi Kavinda,"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblGreeting">
+            <Component class="javax.swing.JLabel" name="lblGreeting1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI Black" size="14" style="0"/>
