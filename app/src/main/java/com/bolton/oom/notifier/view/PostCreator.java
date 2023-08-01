@@ -31,6 +31,7 @@ public class PostCreator extends javax.swing.JFrame {
     public PostCreator() {
         initComponents();
         showGreetingText();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         lblusrname.setText("Hi"+" "+loggedUserDetails.getUsername());
 //        Icon i = jLabel5.getIcon();
 //        ImageIcon icon = (ImageIcon)i;
@@ -43,6 +44,7 @@ public class PostCreator extends javax.swing.JFrame {
         this.channelObserverImpl = channelObserverImpl;
         initComponents();
         showGreetingText();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         lblusrname.setText("Hi"+" "+loggedUserDetails.getUsername());
         
     }
@@ -283,6 +285,7 @@ public class PostCreator extends javax.swing.JFrame {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
             String formatDate = dateFormat.format(new Date());
             channelObserverImpl.informingPostPublishment(new PostContentDTO(formatDate,post.trim(),loggedUserDetails));
+            this.dispose();
             
         }
     }//GEN-LAST:event_btnPostMouseClicked
@@ -317,6 +320,7 @@ public class PostCreator extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new PostCreator().setVisible(true);
             }

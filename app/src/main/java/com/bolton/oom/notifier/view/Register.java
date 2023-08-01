@@ -27,6 +27,7 @@ public class Register extends javax.swing.JFrame {
      */
     public Register() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
         userController = (UserController) ControllerFactory.getInstance().getController(ControllerStatus.USER);
     }
 
@@ -311,6 +312,7 @@ public class Register extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
+        this.dispose();
         Login login = new Login();
         login.setVisible(true);
     }//GEN-LAST:event_btnLoginMouseClicked

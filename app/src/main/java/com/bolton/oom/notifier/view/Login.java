@@ -32,6 +32,7 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         userController = (UserController) ControllerFactory.getInstance().getController(ControllerStatus.USER);
         channelObserverImpl = new ChannelObserverImpl();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -300,6 +301,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginMouseClicked
 
     private void btnSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignupMouseClicked
+        this.dispose();
         Register register = new Register();
         register.setVisible(true);
     }//GEN-LAST:event_btnSignupMouseClicked
