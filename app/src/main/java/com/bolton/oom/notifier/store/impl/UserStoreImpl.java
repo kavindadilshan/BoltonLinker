@@ -21,23 +21,23 @@ public class UserStoreImpl implements SuperStore<UserDTO>{
     private static final ArrayList<UserDTO> signupUserList = new ArrayList<>();
 
     @Override
-    public ResponseDTO save(UserDTO userDTO){
+    public synchronized ResponseDTO save(UserDTO userDTO){
        signupUserList.add(userDTO);
        return new ResponseDTO(true,SUCCESS_MSG,userDTO);
     }
 
     @Override
-    public ResponseDTO remove(UserDTO t){
+    public synchronized ResponseDTO remove(UserDTO t){
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public ResponseDTO getAllData(){
+    public synchronized ResponseDTO getAllData(){
        return new ResponseDTO(true,signupUserList);
     }
 
     @Override
-    public ResponseDTO findBy(UserDTO userDTO){
+    public synchronized ResponseDTO findBy(UserDTO userDTO){
         UserDTO objUserDTO = null; 
         for (UserDTO dto : signupUserList){
             if (userDTO.getEmail().equals(dto.getEmail())) {

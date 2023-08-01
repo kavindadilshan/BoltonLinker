@@ -10,7 +10,7 @@ package com.bolton.oom.notifier.dto;
  */
 public class UserDTO extends SuperDTO{
     
-    private long id;
+    private long id = System.currentTimeMillis();
     private String username;
     private String email;
     private String password;

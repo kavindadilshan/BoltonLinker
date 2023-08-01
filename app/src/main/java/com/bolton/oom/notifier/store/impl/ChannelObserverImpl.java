@@ -48,18 +48,26 @@ public class ChannelObserverImpl implements ChannelSubject{
     }
 
     @Override
-    public void informingPostPublishment(Object object) {
+    public synchronized void informingPostPublishment(Object object) {
         for(ChannelObserver channelObserver : listChannelObservers){
+           
             Home home = (Home) channelObserver;
+           
             PostContentDTO postContentDTO = (PostContentDTO) object;
+             System.out.println("@@@@@@@@@@@"+home.getLoggedUserDetails().getId()+ "$$$$$$$$$$$$$$$$$$"+postContentDTO.getAuthor().getId());
             if (postContentDTO.getAuthor().getId() == home.getLoggedUserDetails().getId()) {
+                System.out.println("home user posting:::::::"+postContentDTO);
                 channelObserver.notifyPostCreation(postContentDTO);
             }else{
-                ResponseDTO subscribers = subscriptionController .getSubscribersIdManager(postContentDTO.getAuthor().getId());
+                System.out.println("----------------------------------------------");
+                ResponseDTO subscribers = subscriptionController.getSubscribersIdManager(postContentDTO.getAuthor().getId());
+                System.out.println("##########"+subscribers);
                 if (subscribers.isSuccess()) {
                     ArrayList<Long>subscribersIdList=(ArrayList<Long>) subscribers.getData();
+                    System.out.println("++++++++++++++"+subscribersIdList);
                     subscribersIdList.forEach(item->{
                         if (home.getLoggedUserDetails().getId() == item) {
+                            System.out.println("subscribe user posting:::::::"+postContentDTO);
                             channelObserver.notifyPostCreation(postContentDTO);
                         }
                     });

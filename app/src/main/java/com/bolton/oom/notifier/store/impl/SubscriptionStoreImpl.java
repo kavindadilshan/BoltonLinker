@@ -21,13 +21,23 @@ public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>
     private static final ArrayList<SubscriptionDetailsDTO> subscribedList = new ArrayList<>();
 
     @Override
-    public ResponseDTO save(SubscriptionDetailsDTO subscriptionDetailsDTO){
-       subscribedList.add(subscriptionDetailsDTO);
+    public synchronized ResponseDTO save(SubscriptionDetailsDTO subscriptionDetailsDTO){
+        SubscriptionDetailsDTO availableObj = null;
+        for(SubscriptionDetailsDTO subcriptionObj : subscribedList){
+            if ((subscriptionDetailsDTO.getPublisherId() == subcriptionObj.getPublisherId()) &&  (subscriptionDetailsDTO.getSubscribeId() == subcriptionObj.getSubscribeId())) {
+                availableObj = subcriptionObj;
+            }
+        }
+        
+        if (availableObj == null) {
+            subscribedList.add(subscriptionDetailsDTO);
+        }
+       
        return new ResponseDTO(true,subscriptionDetailsDTO);
     }
 
     @Override
-    public ResponseDTO remove(SubscriptionDetailsDTO subscriptionDetailsDTO){
+    public synchronized ResponseDTO remove(SubscriptionDetailsDTO subscriptionDetailsDTO){
         for (int i=0;i<subscribedList.size();i++){
             SubscriptionDetailsDTO obj = subscribedList.get(i);
             if ((subscriptionDetailsDTO.getPublisherId()==obj.getPublisherId())) {
@@ -38,12 +48,12 @@ public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>
     }
 
     @Override
-    public ResponseDTO getAllData(){
+    public synchronized ResponseDTO getAllData(){
         return new ResponseDTO(true,subscribedList);
     }
 
     @Override
-    public ResponseDTO findBy(SubscriptionDetailsDTO subscriptionDetailsDTO){
+    public synchronized ResponseDTO findBy(SubscriptionDetailsDTO subscriptionDetailsDTO){
         ArrayList<SubscribedUsersDTO> arrayList = new ArrayList<>();
         ResponseDTO response = new UserStoreImpl().getAllData();
         ArrayList<UserDTO>  userDTOs = (ArrayList<UserDTO>) response.getData();
@@ -69,10 +79,10 @@ public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>
         return new ResponseDTO(true,arrayList);
     }
     
-    public ResponseDTO getSubscribersIds (long userId){
+    public synchronized ResponseDTO getSubscribersIds (long userId){
         ArrayList<Long> subscribersIdList = new ArrayList<>();
         for (SubscriptionDetailsDTO obj : subscribedList){
-            if (userId == obj.getSubscribeId()) {
+            if (userId == obj.getSubscriberId()) {
                 subscribersIdList.add(obj.getPublisherId());
             }
         }
