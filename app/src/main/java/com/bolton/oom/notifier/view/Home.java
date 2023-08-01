@@ -4,19 +4,34 @@
  */
 package com.bolton.oom.notifier.view;
 
+import com.bolton.oom.notifier.controller.SubscriptionController;
 import com.bolton.oom.notifier.dto.PostContentDTO;
+import com.bolton.oom.notifier.dto.ResponseDTO;
+import com.bolton.oom.notifier.dto.SubscribedUsersDTO;
+import com.bolton.oom.notifier.dto.SubscriptionDetailsDTO;
 import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
+import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Calendar;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextPane;
 
 /**
  *
  * @author Kevin Boy
  */
-public class Home extends javax.swing.JFrame implements ChannelObserver{
-    
+public class Home extends javax.swing.JFrame implements ChannelObserver {
+
     private UserDTO loggedUserDetails;
+    private SubscriptionController subscriptionController;
+    
+    JPanel containerPosts = new JPanel(new GridLayout(0, 1));
 
     /**
      * Creates new form Home
@@ -29,23 +44,23 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     public Home(UserDTO userDTO, ChannelObserverImpl channelObserverImpl) {
         initComponents();
         showGreetingText();
-        
+
         this.loggedUserDetails = userDTO;
-        lblUserName.setText("Hi"+" "+loggedUserDetails.getUsername());
+        lblUserName.setText("Hi" + " " + loggedUserDetails.getUsername());
     }
-    
-    public final void showGreetingText(){
+
+    public final void showGreetingText() {
         Calendar calendar = Calendar.getInstance();
         int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);
-        
-        if(timeOfDay >= 0 && timeOfDay < 12){
+
+        if (timeOfDay >= 0 && timeOfDay < 12) {
             lblGreeting.setText("Good Morning!");
-        }else if (timeOfDay >= 12 && timeOfDay < 16) {
+        } else if (timeOfDay >= 12 && timeOfDay < 16) {
             lblGreeting.setText("Good Afternoon!");
-        }else if (timeOfDay >= 16 && timeOfDay < 21) {
+        } else if (timeOfDay >= 16 && timeOfDay < 21) {
             lblGreeting.setText("Good Evening!");
-        }else {
-             lblGreeting.setText("Good Night!");
+        } else {
+            lblGreeting.setText("Good Night!");
         }
     }
 
@@ -65,7 +80,9 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
+        jspNewsFeed = new javax.swing.JScrollPane();
         jPanel10 = new javax.swing.JPanel();
+        jspActiveList = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -123,22 +140,22 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jspNewsFeed)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jspNewsFeed, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 252, Short.MAX_VALUE)
+            .addComponent(jspActiveList, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 317, Short.MAX_VALUE)
+            .addComponent(jspActiveList, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,7 +170,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(77, Short.MAX_VALUE)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72))
         );
@@ -335,21 +352,128 @@ public class Home extends javax.swing.JFrame implements ChannelObserver{
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jspActiveList;
+    private javax.swing.JScrollPane jspNewsFeed;
     private javax.swing.JLabel lblGreeting;
     private javax.swing.JLabel lblUserName;
     // End of variables declaration//GEN-END:variables
 
+    public void getAllSubscriptionHandler(){
+        ResponseDTO response = subscriptionController.getAllSubscriptionsForUser(loggedUserDetails);
+        if (response.isSuccess()) {
+            ArrayList<SubscribedUsersDTO> subscribedUsersDTOs = (ArrayList<SubscribedUsersDTO>) response.getData();
+            JPanel containerSubscription = new JPanel(new GridLayout(0, 1));
+            
+            subscribedUsersDTOs.forEach((SubscribedUsersDTO item) -> {
+                JPanel userWrapperl = new JPanel();
+                userWrapperl.setBackground(new java.awt.Color(255, 255, 255));
+                
+                JSeparator separator = new JSeparator();
+                
+                JLabel lblRegUser = new JLabel();
+                lblRegUser.setBackground(new java.awt.Color(255, 255, 255));
+                
+                lblRegUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+                lblRegUser.setToolTipText(item.getUserDTO().getUsername());
+                lblRegUser.setText(item.getUserDTO().getUsername());
+                
+                JButton btnSubscribe = new JButton();
+                btnSubscribe.setBackground(item.isIsSubscribed()? new java.awt.Color(102, 102, 102) : new java.awt.Color(255, 0, 0));
+                
+                btnSubscribe.setForeground(new java.awt.Color(255, 255, 255));
+                btnSubscribe.setText(item.isIsSubscribed() ? "Unsubscribe" : "Subscribe");
+                btnSubscribe.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+                btnSubscribe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                
+                btnSubscribe.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mouseClicked(java.awt.event.MouseEvent evt) {
+                        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(item.getUserDTO().getId(), loggedUserDetails.getId()));
+                        if (response.isSuccess()) {
+//                            getAllSubscriptionHandler();
+                        }
+                    }
+                });
+                
+                
+                javax.swing.GroupLayout userWrapperlLayout = new javax.swing.GroupLayout(userWrapperl);
+                userWrapperl.setLayout(userWrapperlLayout);
+                userWrapperlLayout.setHorizontalGroup(
+                        userWrapperlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(separator)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userWrapperlLayout.createSequentialGroup()
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnSubscribe, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap())
+                                .addGroup(userWrapperlLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(lblRegUser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
+                userWrapperlLayout.setVerticalGroup(
+                        userWrapperlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, userWrapperlLayout.createSequentialGroup()
+                                        .addContainerGap(15, Short.MAX_VALUE)
+                                        .addComponent(lblRegUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(btnSubscribe, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE))
+                );
+                
+                containerSubscription.add(userWrapperl);
+               
+            });
+            jspActiveList.setViewportView(containerSubscription);
+        }
+    }
+    
     @Override
     public void notifyPostCreation(PostContentDTO postContentDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        JPanel subPanel = new JPanel();
+        JSeparator separator = new JSeparator();
+        JTextPane textPane = new JTextPane();
+        textPane.setEditable(false);
+        JLabel lblAuthor = new JLabel();
+        javax.swing.GroupLayout groupLayout = new javax.swing.GroupLayout(subPanel);
+        subPanel.setLayout(groupLayout);
+
+        groupLayout.setHorizontalGroup(
+                groupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(groupLayout.createSequentialGroup()
+                                .addGroup(groupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(groupLayout.createSequentialGroup()
+                                                .addGap(8, 8, 8)
+                                                .addComponent(textPane, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+                                        .addGroup(groupLayout.createSequentialGroup()
+                                                .addContainerGap()
+                                                .addComponent(lblAuthor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addContainerGap())
+                        .addComponent(separator)
+        );
+
+        groupLayout.setVerticalGroup(
+                groupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(textPane, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        
+        containerPosts.add(subPanel);
+        jspNewsFeed.setViewportView(containerPosts);
+
     }
 
     @Override
     public void notifyAccountCreation(UserDTO userDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        getAllSubscriptionHandler();
     }
-    
-    public UserDTO getLoggedUserDetails(){
+
+    public UserDTO getLoggedUserDetails() {
         return loggedUserDetails;
     }
 }

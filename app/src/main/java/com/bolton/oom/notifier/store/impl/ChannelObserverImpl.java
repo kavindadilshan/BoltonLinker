@@ -41,6 +41,7 @@ public class ChannelObserverImpl implements ChannelSubject{
 
     @Override
     public void informingAccCreation(Object object) {
+        System.out.println(":::::::::::::::"+object);
         for(ChannelObserver channelObserver : listChannelObservers){
             channelObserver.notifyAccountCreation((UserDTO) object);
         }

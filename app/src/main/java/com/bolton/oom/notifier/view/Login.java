@@ -267,6 +267,13 @@ public class Login extends javax.swing.JFrame {
         return REGEX_PATTERN.matcher(value).find();
     }
     
+    private void openHomeScreenHandler(UserDTO userDto) {
+        Home home = new Home(userDto, channelObserverImpl);
+        channelObserverImpl.addObserver(home);
+        channelObserverImpl.informingAccCreation(userDto);
+        home.setVisible(true);
+    }
+    
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         String email = txtEmail.getText();
         String password = txtPassword.getText();
@@ -275,11 +282,12 @@ public class Login extends javax.swing.JFrame {
             if (emailValidator(email.trim())) {
                 ResponseDTO response = userController.loginUserHandler(new UserDTO(email.trim(),password.trim()));
                 if (response.isSuccess()) {
-                    UserDTO userDTO = (UserDTO) response.getData();
-                    Home home = new Home(userDTO,channelObserverImpl);
-                    channelObserverImpl.addObserver(home);
-                    channelObserverImpl.informingAccCreation(userDTO);
-                    home.setVisible(true);
+                    openHomeScreenHandler((UserDTO) response.getData());
+//                    UserDTO userDTO = (UserDTO) response.getData();
+//                    Home home = new Home(userDTO,channelObserverImpl);
+//                    channelObserverImpl.addObserver(home);
+//                    channelObserverImpl.informingAccCreation(userDTO);
+//                    home.setVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(Login.this, AUTHENTICATE_DATA_INVALID, "Login", JOptionPane.WARNING_MESSAGE);
                 }
