@@ -28,7 +28,7 @@ import javax.swing.JTextPane;
  *
  * @author Kevin Boy
  */
-public class Home extends javax.swing.JFrame implements ChannelObserver {
+public final class Home extends javax.swing.JFrame implements ChannelObserver {
 
     private UserDTO loggedUserDetails;
     private SubscriptionController subscriptionController;
@@ -52,6 +52,9 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
         this.loggedUserDetails = userDTO;
         this.channelObserverImpl = observerImpl;
         lblUserName.setText("Hi" + " " + loggedUserDetails.getUsername());
+        
+        getAllSubscriptionHandler();
+        
     }
 
     public final void showGreetingText() {
@@ -130,6 +133,7 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
         btnPost.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         btnPost.setForeground(new java.awt.Color(255, 255, 255));
         btnPost.setText("Post");
+        btnPost.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnPost.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPostMouseClicked(evt);
@@ -374,9 +378,12 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
 
     public void getAllSubscriptionHandler(){
         ResponseDTO response = subscriptionController.getAllSubscriptionsForUser(loggedUserDetails);
+        System.out.println("response::::::::::::"+response);
         if (response.isSuccess()) {
             ArrayList<SubscribedUsersDTO> subscribedUsersDTOs = (ArrayList<SubscribedUsersDTO>) response.getData();
             JPanel containerSubscription = new JPanel(new GridLayout(0, 1));
+            
+            System.out.println("subscribers:::::::::"+subscribedUsersDTOs);
             
             subscribedUsersDTOs.forEach((SubscribedUsersDTO item) -> {
                 JPanel userWrapperl = new JPanel();
@@ -402,9 +409,16 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
                 btnSubscribe.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mouseClicked(java.awt.event.MouseEvent evt) {
-                        ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(item.getUserDTO().getId(), loggedUserDetails.getId()));
-                        if (response.isSuccess()) {
-//                            getAllSubscriptionHandler();
+                        if (item.isIsSubscribed()) {
+                            ResponseDTO response = subscriptionController.unsubscriptionManagement(new SubscriptionDetailsDTO(item.getUserDTO().getId(), loggedUserDetails.getId()));
+                            if (response.isSuccess()) {
+                               getAllSubscriptionHandler();
+                            }
+                        }else{
+                            ResponseDTO response = subscriptionController.subscriptionProcessManagement(new SubscriptionDetailsDTO(item.getUserDTO().getId(), loggedUserDetails.getId()));
+                            if (response.isSuccess()) {
+                               getAllSubscriptionHandler();
+                            }
                         }
                     }
                 });
@@ -444,11 +458,21 @@ public class Home extends javax.swing.JFrame implements ChannelObserver {
     
     @Override
     public void notifyPostCreation(PostContentDTO postContentDTO) {
+        System.out.println("notify::::::::::::::::::::"+postContentDTO.getAuthor()+"loguser::::::::::::::"+loggedUserDetails);
         JPanel subPanel = new JPanel();
+        subPanel.setBackground(new java.awt.Color(255, 255, 255));
         JSeparator separator = new JSeparator();
         JTextPane textPane = new JTextPane();
         textPane.setEditable(false);
+        textPane.setBackground(new java.awt.Color(255, 255, 255));
+        textPane.setFont(new java.awt.Font("URW Gothic L", 0, 14));
         JLabel lblAuthor = new JLabel();
+        lblAuthor.setBackground(new java.awt.Color(255, 255, 255));
+        lblAuthor.setFont(new java.awt.Font("URW Gothic L", 0, 13));
+        lblAuthor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        textPane.setText(postContentDTO.getPostTitle());
+        String postedBy = loggedUserDetails.getId() == postContentDTO.getAuthor().getId() ? "Me" : postContentDTO.getAuthor().getUsername();
+        lblAuthor.setText("- Posted by " + postedBy + " on " + postContentDTO.getDateAndTime());
         javax.swing.GroupLayout groupLayout = new javax.swing.GroupLayout(subPanel);
         subPanel.setLayout(groupLayout);
 
