@@ -14,6 +14,7 @@ import com.bolton.oom.notifier.dto.UserDTO;
 import com.bolton.oom.notifier.enums.ControllerStatus;
 import com.bolton.oom.notifier.store.ChannelObserver;
 import com.bolton.oom.notifier.store.impl.ChannelObserverImpl;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,14 +43,11 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
     public Home() {
         initComponents();
         showGreetingText();
-       
-        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
 
     public Home(UserDTO userDTO, ChannelObserverImpl observerImpl) {
         initComponents();
         showGreetingText();
-        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
          subscriptionController = (SubscriptionController) ControllerFactory.getInstance().getController(ControllerStatus.SUBSCRIBE);
 
         this.loggedUserDetails = userDTO;
@@ -443,9 +441,16 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
     @Override
     public void notifyPostCreation(PostContentDTO postContentDTO) {
         System.out.println("notify::::::::::::::::::::"+postContentDTO.getAuthor()+"loguser::::::::::::::"+loggedUserDetails);
+        String postedBy = loggedUserDetails.getId() == postContentDTO.getAuthor().getId() ? postContentDTO.getAuthor().getUsername() + " (Me)" : postContentDTO.getAuthor().getUsername();
         JPanel subPanel = new JPanel();
         subPanel.setBackground(new java.awt.Color(255, 255, 255));
         JSeparator separator = new JSeparator();
+         JTextPane username = new JTextPane();
+         username.setEditable(true);
+         username.setBackground(new java.awt.Color(255, 255, 255));
+         username.setFont(new java.awt.Font("URW Gothic L", 0, 14));
+         username.setFont(username.getFont().deriveFont(Font.BOLD));
+         username.setText(postedBy);
         JTextPane textPane = new JTextPane();
         textPane.setEditable(false);
         textPane.setBackground(new java.awt.Color(255, 255, 255));
@@ -455,8 +460,8 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
         lblAuthor.setFont(new java.awt.Font("URW Gothic L", 0, 13));
         lblAuthor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         textPane.setText(postContentDTO.getPostTitle());
-        String postedBy = loggedUserDetails.getId() == postContentDTO.getAuthor().getId() ? "Me" : postContentDTO.getAuthor().getUsername();
-        lblAuthor.setText("- Posted by " + postedBy + " on " + postContentDTO.getDateAndTime());
+        
+        lblAuthor.setText(postContentDTO.getDateAndTime());
         javax.swing.GroupLayout groupLayout = new javax.swing.GroupLayout(subPanel);
         subPanel.setLayout(groupLayout);
 
@@ -465,8 +470,11 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
                         .addGroup(groupLayout.createSequentialGroup()
                                 .addGroup(groupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(groupLayout.createSequentialGroup()
-                                                .addGap(8, 8, 8)
-                                                .addComponent(textPane, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+                                                .addGap(0, 0, 0)
+                                                .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                                        .addGroup(groupLayout.createSequentialGroup()
+                                                .addGap(0, 0, 0)
+                                                .addComponent(textPane, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
                                         .addGroup(groupLayout.createSequentialGroup()
                                                 .addContainerGap()
                                                 .addComponent(lblAuthor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -477,11 +485,12 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
         groupLayout.setVerticalGroup(
                 groupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, groupLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(textPane, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                                .addGap(0, 0, 0)
+                                .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                                .addComponent(textPane, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
+                                .addComponent(lblAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
                                 .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         
@@ -498,6 +507,4 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
     public UserDTO getLoggedUserDetails() {
         return loggedUserDetails;
     }
-    
-   
 }
