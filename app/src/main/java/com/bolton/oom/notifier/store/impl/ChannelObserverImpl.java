@@ -30,19 +30,20 @@ public class ChannelObserverImpl implements ChannelSubject{
     }
     
     @Override
-    public void addObserver(ChannelObserver channelObserver) {
+    public synchronized void addObserver(ChannelObserver channelObserver) {
         listChannelObservers.add(channelObserver);
     }
 
     @Override
-    public void removeObserver(ChannelObserver channelObserver) {
+    public synchronized void removeObserver(ChannelObserver channelObserver) {
         listChannelObservers.remove(channelObserver);
     }
 
     @Override
-    public void informingAccCreation(Object object) {
+    public synchronized void informingAccCreation(Object object) {
         System.out.println(":::::::::::::::"+object);
         for(ChannelObserver channelObserver : listChannelObservers){
+             Home home = (Home) channelObserver;
             channelObserver.notifyAccountCreation((UserDTO) object);
         }
     }
