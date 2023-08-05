@@ -3,12 +3,12 @@
  */
 package com.bolton.boltonlinker;
 
+import com.bolton.boltonlinker.view.Login;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        Login login = new Login();
+        login.setVisible(true);
     }
 }
