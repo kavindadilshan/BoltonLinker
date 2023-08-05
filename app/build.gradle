@@ -33,7 +33,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.bolton.oom.notifier.App'
+    mainClass = 'com.bolton.boltonlinker.App'
 }
 
 tasks.named('test') {
