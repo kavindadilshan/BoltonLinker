@@ -15,8 +15,10 @@ import com.bolton.boltonlinker.enums.ControllerStatus;
 import com.bolton.boltonlinker.store.ChannelObserver;
 import com.bolton.boltonlinker.store.impl.ChannelObserverImpl;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.BorderFactory;
@@ -38,6 +40,7 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
     private ChannelObserverImpl channelObserverImpl;
 
     JPanel containerPosts = new JPanel(new GridLayout(0, 1));
+    Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
     /**
      * Creates new form Home
@@ -47,16 +50,18 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
         showGreetingText();
     }
 
-    public Home(UserDTO userDTO, ChannelObserverImpl observerImpl) {
+    public Home(UserDTO userDTO, ChannelObserverImpl channelObserverImpl) {
         initComponents();
         showGreetingText();
+         this.setLocation(dim.width, 0);
         subscriptionController = (SubscriptionController) ControllerFactory.getInstance().getController(ControllerStatus.SUBSCRIBE);
 
         this.loggedUserDetails = userDTO;
-        this.channelObserverImpl = observerImpl;
+        this.channelObserverImpl = channelObserverImpl;
         lblUserName.setText("Hi" + " " + loggedUserDetails.getUsername());
 
         getAllSubscriptionHandler();
+        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
 
     }
 

@@ -313,8 +313,6 @@ public class Register extends javax.swing.JFrame {
 
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         this.dispose();
-        Login login = new Login();
-        login.setVisible(true);
     }//GEN-LAST:event_btnLoginMouseClicked
 
     /**

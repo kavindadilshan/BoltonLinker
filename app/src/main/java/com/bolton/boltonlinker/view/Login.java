@@ -32,7 +32,6 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         userController = (UserController) ControllerFactory.getInstance().getController(ControllerStatus.USER);
         channelObserverImpl = new ChannelObserverImpl();
-        setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -268,12 +267,6 @@ public class Login extends javax.swing.JFrame {
         return REGEX_PATTERN.matcher(value).find();
     }
     
-    private void openHomeScreenHandler(UserDTO userDto) {
-        Home home = new Home(userDto, channelObserverImpl);
-        channelObserverImpl.addObserver(home);
-        channelObserverImpl.informingAccCreation(userDto);
-        home.setVisible(true);
-    }
     
     private void btnLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseClicked
         String email = txtEmail.getText();
@@ -283,12 +276,11 @@ public class Login extends javax.swing.JFrame {
             if (emailValidator(email.trim())) {
                 ResponseDTO response = userController.loginUserHandler(new UserDTO(email.trim(),password.trim()));
                 if (response.isSuccess()) {
-                    openHomeScreenHandler((UserDTO) response.getData());
-//                    UserDTO userDTO = (UserDTO) response.getData();
-//                    Home home = new Home(userDTO,channelObserverImpl);
-//                    channelObserverImpl.addObserver(home);
-//                    channelObserverImpl.informingAccCreation(userDTO);
-//                    home.setVisible(true);
+                    UserDTO userDTO = (UserDTO) response.getData();
+                    Home home = new Home(userDTO,channelObserverImpl);
+                    channelObserverImpl.addObserver(home);
+                    channelObserverImpl.informingAccCreation(userDTO);
+                    home.setVisible(true);
                 }else{
                     JOptionPane.showMessageDialog(Login.this, AUTHENTICATE_DATA_INVALID, "Login", JOptionPane.WARNING_MESSAGE);
                 }
@@ -301,7 +293,6 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginMouseClicked
 
     private void btnSignupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignupMouseClicked
-        this.dispose();
         Register register = new Register();
         register.setVisible(true);
     }//GEN-LAST:event_btnSignupMouseClicked
