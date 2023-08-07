@@ -19,6 +19,7 @@ import java.util.Set;
  *
  * @author Kevin Boy
  */
+
 public class ChannelObserverImpl implements ChannelSubject{    
 
     private final Set<ChannelObserver> listChannelObservers;

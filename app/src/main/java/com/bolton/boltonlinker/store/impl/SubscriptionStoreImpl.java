@@ -16,77 +16,82 @@ import java.util.ArrayList;
  *
  * @author Kevin Boy
  */
-public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>{
-    
+public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO> {
+
     private static final ArrayList<SubscriptionDetailsDTO> subscribedList = new ArrayList<>();
 
     @Override
-    public synchronized ResponseDTO save(SubscriptionDetailsDTO subscriptionDetailsDTO){
+    public synchronized ResponseDTO save(SubscriptionDetailsDTO subscriptionDetailsDTO) {
         SubscriptionDetailsDTO availableObj = null;
-        for(SubscriptionDetailsDTO subcriptionObj : subscribedList){
-            if ((subscriptionDetailsDTO.getPublisherId() == subcriptionObj.getPublisherId()) &&  (subscriptionDetailsDTO.getSubscribeId() == subcriptionObj.getSubscribeId())) {
+        for (SubscriptionDetailsDTO subcriptionObj : subscribedList) {
+            if ((subscriptionDetailsDTO.getPublisherId() == subcriptionObj.getPublisherId()) && (subscriptionDetailsDTO.getSubscribeId() == subcriptionObj.getSubscribeId())) {
                 availableObj = subcriptionObj;
             }
         }
-        
+
         if (availableObj == null) {
             subscribedList.add(subscriptionDetailsDTO);
         }
-       
-       return new ResponseDTO(true,subscriptionDetailsDTO);
+
+        return new ResponseDTO(true, subscriptionDetailsDTO);
     }
 
     @Override
-    public synchronized ResponseDTO remove(SubscriptionDetailsDTO subscriptionDetailsDTO){
-        for (int i=0;i<subscribedList.size();i++){
+    public synchronized ResponseDTO remove(SubscriptionDetailsDTO subscriptionDetailsDTO) {
+        for (int i = 0; i < subscribedList.size(); i++) {
             SubscriptionDetailsDTO obj = subscribedList.get(i);
-            if ((subscriptionDetailsDTO.getPublisherId()==obj.getPublisherId())) {
+            if ((subscriptionDetailsDTO.getPublisherId() == obj.getPublisherId())) {
                 subscribedList.remove(obj);
             }
         }
-        return new ResponseDTO(true,USER_UNSUBSCRIBED,subscriptionDetailsDTO);
+        return new ResponseDTO(true, USER_UNSUBSCRIBED, subscriptionDetailsDTO);
     }
 
     @Override
-    public synchronized ResponseDTO getAllData(){
-        return new ResponseDTO(true,subscribedList);
+    public synchronized ResponseDTO getAllData() {
+        return new ResponseDTO(true, subscribedList);
     }
 
     @Override
-    public synchronized ResponseDTO findBy(SubscriptionDetailsDTO subscriptionDetailsDTO){
-        ArrayList<SubscribedUsersDTO> arrayList = new ArrayList<>();
-        ResponseDTO response = new UserStoreImpl().getAllData();
-        ArrayList<UserDTO>  userDTOs = (ArrayList<UserDTO>) response.getData();
-        userDTOs.forEach(item -> {
-            if (item.getId() == subscriptionDetailsDTO.getPublisherId()) {
-                return;
-            }
-            
-            SubscribedUsersDTO tempList = new SubscribedUsersDTO();
-            boolean isFound = false;
-            UserDTO tempObj = null;
-            
-            for (SubscriptionDetailsDTO obj : subscribedList){
-                if ((subscriptionDetailsDTO.getPublisherId() == obj.getPublisherId()) && (obj.getSubscriberId() == item.getId())) {
-                    isFound = true;
-                    tempObj = item;
+    public synchronized ResponseDTO findBy(SubscriptionDetailsDTO subscriptionDetailsDTO) {
+        try {
+            ArrayList<SubscribedUsersDTO> arrayList = new ArrayList<>();
+            ResponseDTO response = new UserStoreImpl().getAllData();
+            ArrayList<UserDTO> userDTOs = (ArrayList<UserDTO>) response.getData();
+            userDTOs.forEach(item -> {
+                if (item.getId() == subscriptionDetailsDTO.getPublisherId()) {
+                    return;
                 }
-            }
-            tempList.setUserDTO(!isFound ? item : tempObj);
-            tempList.setIsSubscribed(isFound);
-            arrayList.add(tempList);
-        });
-        return new ResponseDTO(true,arrayList);
+
+                SubscribedUsersDTO tempList = new SubscribedUsersDTO();
+                boolean isFound = false;
+                UserDTO tempObj = null;
+
+                for (SubscriptionDetailsDTO obj : subscribedList) {
+                    if ((subscriptionDetailsDTO.getPublisherId() == obj.getPublisherId()) && (obj.getSubscriberId() == item.getId())) {
+                        isFound = true;
+                        tempObj = item;
+                    }
+                }
+                tempList.setUserDTO(!isFound ? item : tempObj);
+                tempList.setIsSubscribed(isFound);
+                arrayList.add(tempList);
+            });
+            return new ResponseDTO(true, arrayList);
+        } catch (Exception e) {
+            return new ResponseDTO(false, e.getMessage(), null);
+        }
+
     }
-    
-    public synchronized ResponseDTO getSubscribersIds (long userId){
+
+    public synchronized ResponseDTO getSubscribersIds(long userId) {
         ArrayList<Long> subscribersIdList = new ArrayList<>();
-        for (SubscriptionDetailsDTO obj : subscribedList){
+        for (SubscriptionDetailsDTO obj : subscribedList) {
             if (userId == obj.getSubscriberId()) {
                 subscribersIdList.add(obj.getPublisherId());
             }
         }
-        return new ResponseDTO(!subscribersIdList.isEmpty(),subscribersIdList);
+        return new ResponseDTO(!subscribersIdList.isEmpty(), subscribersIdList);
     }
-    
+
 }
