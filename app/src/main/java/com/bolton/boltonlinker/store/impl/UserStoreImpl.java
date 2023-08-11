@@ -4,6 +4,7 @@
  */
 package com.bolton.boltonlinker.store.impl;
 
+import static com.bolton.boltonlinker.constants.Constants.ERROR_MSG;
 import static com.bolton.boltonlinker.constants.Constants.SUCCESS_MSG;
 import static com.bolton.boltonlinker.constants.Constants.USER_NOT_FOUND;
 import com.bolton.boltonlinker.dto.ResponseDTO;
@@ -22,8 +23,12 @@ public class UserStoreImpl implements SuperStore<UserDTO> {
 
     @Override
     public synchronized ResponseDTO save(UserDTO userDTO) {
-        signupUserList.add(userDTO);
-        return new ResponseDTO(true, SUCCESS_MSG, userDTO);
+        boolean isAdded = signupUserList.add(userDTO);
+        if (isAdded) {
+            return new ResponseDTO(true, SUCCESS_MSG, userDTO);
+        }else{
+             return new ResponseDTO(false, ERROR_MSG, null);
+        }
     }
 
     @Override
