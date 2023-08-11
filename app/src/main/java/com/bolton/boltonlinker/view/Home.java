@@ -376,6 +376,7 @@ public final class Home extends javax.swing.JFrame implements ChannelObserver {
                 JPanel userWrapperl = new JPanel();
                 JLabel lblRegUser = new JLabel();
                 JButton btnSubscribe = new JButton();
+                System.out.println("item:::::::::" + item);
 
                 userWrapperl.setBackground(new java.awt.Color(255, 255, 255));
                 userWrapperl.setForeground(new java.awt.Color(255, 255, 255));

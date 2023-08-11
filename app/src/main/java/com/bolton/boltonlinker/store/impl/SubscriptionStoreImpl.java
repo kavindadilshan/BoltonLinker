@@ -24,7 +24,7 @@ public class SubscriptionStoreImpl implements SuperStore<SubscriptionDetailsDTO>
     public synchronized ResponseDTO save(SubscriptionDetailsDTO subscriptionDetailsDTO) {
         SubscriptionDetailsDTO availableObj = null;
         for (SubscriptionDetailsDTO subcriptionObj : subscribedList) {
-            if ((subscriptionDetailsDTO.getPublisherId() == subcriptionObj.getPublisherId()) && (subscriptionDetailsDTO.getSubscribeId() == subcriptionObj.getSubscribeId())) {
+            if ((subscriptionDetailsDTO.getPublisherId() == subcriptionObj.getPublisherId()) && (subscriptionDetailsDTO.getSubscriberId()== subcriptionObj.getSubscriberId())) {
                 availableObj = subcriptionObj;
             }
         }
